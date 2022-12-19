@@ -1,10 +1,14 @@
 import { defineComponent } from 'vue'
 import { FiledPropsDefine } from '../type'
 
+import SchemaItem from 'lib/SchemaItem'
+
 export default defineComponent({
-  name: 'StringField',
+  name: 'ObjectField',
   props: FiledPropsDefine,
   setup(props, ctx) {
-    return () => <div> Number </div>
+    return () => {
+      return
+    }
   }
 })

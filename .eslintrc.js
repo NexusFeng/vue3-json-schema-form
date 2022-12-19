@@ -17,7 +17,8 @@ module.exports = {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     '@typescript-eslint/no-explicit-any': ['off'],
-    'jsx-a11y/anchor-is-valid': 'off'
+    '@typescript-eslint/no-use-define': 'off',
+    'no-prototype-builtins': 'off'
   },
   overrides: [
     {
