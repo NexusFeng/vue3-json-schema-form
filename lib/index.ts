@@ -8,4 +8,6 @@ import ThemeProvider from './theme'
 
 export default SchemaForm
 
+export * from './type'
+
 export { NumberField, StringField, ArrayField, SelectionWidget, ThemeProvider }

@@ -1,7 +1,7 @@
 import { defineComponent, PropType, ref, watch, watchEffect } from 'vue'
 import { SelectionWidgetPropsDefine, SelectionWidgetDefine } from '../type'
 
-const Selection: SelectionWidgetDefine = defineComponent({
+const SelectionWidget: any = defineComponent({
   name: 'SelectionWidget',
   props: SelectionWidgetPropsDefine,
   setup(props) {
@@ -35,4 +35,4 @@ const Selection: SelectionWidgetDefine = defineComponent({
   }
 })
 
-export default Selection
+export default SelectionWidget
