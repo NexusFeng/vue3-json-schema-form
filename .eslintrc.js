@@ -18,7 +18,8 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     '@typescript-eslint/no-explicit-any': ['off'],
     '@typescript-eslint/no-use-define': 'off',
-    'no-prototype-builtins': 'off'
+    'no-prototype-builtins': 'off',
+    'vue/no-mutating-props': 'off'
   },
   overrides: [
     {

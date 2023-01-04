@@ -126,6 +126,7 @@ export default defineComponent({
     const handleSchemaChange = (v: string) => handleCodeChange('schema', v)
     const handleDataChange = (v: string) => handleCodeChange('data', v)
     const handleUISchemaChange = (v: string) => handleCodeChange('uiSchema', v)
+    const contextRef = ref()
 
     return () => {
       const classes = classesRef.value
@@ -177,14 +178,18 @@ export default defineComponent({
               </div>
             </div>
             <div class={classes.form}>
-              <ThemeProvider theme={themeDefault}>
+              <ThemeProvider theme={themeDefault as any}>
                 <SchemaForm
                   // theme={themeDefault as any}
                   schema={demo.schema}
                   onChange={handleChange}
                   value={demo.data}
+                  contextRef={methodRef}
                 />
               </ThemeProvider>
+              <button onClick={() => contextRef.value.doValidate()}>
+                校验
+              </button>
               {/* <SchemaForm
                 schema={demo.schema!}
                 uiSchema={demo.uiSchema!}
@@ -195,8 +200,6 @@ export default defineComponent({
             </div>
           </div>
         </div>
-        // </VJSFThemeProvider>
-        // </StyleThemeProvider>
       )
     }
   }
