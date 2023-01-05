@@ -1,6 +1,15 @@
-import { defineComponent, PropType, provide, Ref, watch } from 'vue'
+import {
+  defineComponent,
+  PropType,
+  provide,
+  Ref,
+  shallowRef,
+  watch,
+  watchEffect
+} from 'vue'
 
 import { Schema, SchemaTypes, Theme } from './type'
+import Ajv, { Options } from 'ajv'
 import SchemaItem from './SchemaItem'
 import { SchemaFormContextKey } from './context'
 
@@ -9,6 +18,11 @@ interface ContextRef {
     errors: any[]
     valid: boolean
   }
+}
+
+const defaultAjvOptions: Options = {
+  allErrors: true,
+  jsonPointers: true
 }
 
 export default defineComponent({
@@ -27,6 +41,9 @@ export default defineComponent({
     },
     contextRef: {
       type: Object as PropType<Ref<ContextRef | undefined>>
+    },
+    ajvOptions: {
+      type: Object as PropType<Options>
     }
     // theme: {
     //   type: Object as PropType<Theme>,
@@ -42,15 +59,28 @@ export default defineComponent({
       // them: props.theme
     }
 
+    const validatorRef: Ref<Ajv.Ajv> = shallowRef() as any
+
+    watchEffect(() => {
+      validatorRef.value = new Ajv({
+        ...defaultAjvOptions,
+        ...props.ajvOptions
+      })
+    })
+
     watch(
       () => props.contextRef,
       () => {
         if (props.contextRef) {
           props.contextRef.value = {
             doValidate() {
+              const valid = validatorRef.value.validate(
+                props.schema,
+                props.value
+              ) as boolean
               return {
-                valid: true,
-                errors: []
+                valid: valid,
+                errors: validatorRef.value.errors || []
               }
             }
           }
