@@ -1,5 +1,5 @@
 import Ajv from 'ajv'
-import i18n from 'ajv-i18n'
+const i18n = require('ajv-i18n') // eslint-disable-line
 import toPath from 'lodash.topath'
 import { Schema } from './type'
 
@@ -9,6 +9,14 @@ interface TransformErrorObject {
   message: string | undefined,
   params: Ajv.ErrorParameters,
   schemaPath: string
+}
+
+interface ErrorSchemaObject {
+  [level: string]: ErrorSchema
+}
+
+export type ErrorSchema = ErrorSchemaObject & {
+  __errors: string[]
 }
 
 function toErrorSchema(errors: TransformErrorObject[]){
@@ -58,7 +66,7 @@ export function validateFormData(
   validator: Ajv.Ajv,
   formData: any,
   schema: Schema,
-  locale: string = 'zh'
+  locale = 'zh'
 ){
   let validationError: any = null
   try {
@@ -77,5 +85,13 @@ export function validateFormData(
         message: validationError.message
       } as TransformErrorObject
     ]
+  }
+
+  const errorSchema = toErrorSchema(errors)
+
+  return {
+    errorSchema,
+    errors,
+    valid: errors.length === 0
   }
 }
